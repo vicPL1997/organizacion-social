@@ -1,0 +1,53 @@
+<div class="ecommerce-widget">
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+            <div class="card">
+                <div class="card-body">
+                    <p><b>• A continuación se muestra un listado de los empleados disponibles para añadir a este proyecto:</b></p><br><br>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered first">
+                            <thead class="bg-light">
+                            <tr class="border-0">
+                                <th class="border-0">Nombre</th>
+                                <th class="border-0">Apellidos</th>
+                                <th class="border-0">Edad</th>
+                                <th class="border-0">Sexo</th>
+                                <th class="border-0">Dedicación</th>
+                                <th class="border-0">Sueldo</th>
+                                <th class="border-0">Añadir usuario</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ac in usuariosEmpleados %}
+                                {% set auxiliar = 0 %}
+                                {% for ax in empleados %}
+                                    {% if ax.id == ac.id %}
+                                        {% set auxiliar=1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if auxiliar == 0 %}
+                                    <tr>
+
+                                        <td>{{ ac.nombre }}</td>
+                                        <td>{{ ac.apellidos }}</td>
+                                        <td>{{ ac.edad }}</td>
+                                        <td>{{ ac.sexo }}</td>
+                                        <td>{{ ac.dedicacionEmpleado }}</td>
+                                        <td>{{ ac.sueldoEmpleado }}</td>
+                                        <td>
+                                            <button title="Añadir empleado" id="{{ac.id}}" onclick="addUsuarioProyecto(this.id,{{proyecto.id}})" class="btn  p-1 rounded fa-lg my-1" style=";"><i class="fa fa-user-plus"></i></button>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

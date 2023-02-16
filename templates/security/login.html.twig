@@ -1,0 +1,61 @@
+{% extends 'navegador.html.twig' %}
+
+
+    {% block title %}
+        {{ parent() }} - Iniciar sesión
+    {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link href="{{ asset('vendor/fonts/circular-std/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('libs/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/fonts/fontawesome/css/fontawesome-all.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/buttons.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/select.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/fixedHeader.bootstrap4.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+        <div class="splash-container">
+
+        <div class="card ">
+            <div class="card-header text-center"><span class="splash-description">ERROR.</span></div>
+                <div class="card-body">
+                <div class="mb-3">
+                    Usted ha inicidado sesión como {{ app.user.email }}, para iniciar sesión cierre sesión en dicha cuenta. <a href="{{ path('app_logout') }}" style="color: red !important;">Cerrar sesión</a>
+                </div>
+                </div>
+        </div>
+        </div>
+        {% else %}
+        <div class="splash-container">
+            <div class="card ">
+                <div class="card-header text-center"><span class="splash-description">Por favor, introduce tu información.</span></div>
+                <div class="card-body">
+                    <form>
+                        <label for="inputEmail">Email</label>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                        <label for="inputPassword">Contraseña</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+
+
+                        <button class="btn btn-lg btn-primary" type="submit">
+                            Iniciar sesión
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+{% endblock %}

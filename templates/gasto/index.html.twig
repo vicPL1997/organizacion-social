@@ -1,0 +1,59 @@
+{% extends 'navegador.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}{{ parent() }} - Nuevo gasto{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Panel de administración </h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/dashboard" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Crear gasto</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-3 ">
+                    <p><i>Si deseas añadir otra categoría que no se encuentra en la lista, a continuación podrá crear dicha categoría:</i></p><br>
+                    <button class="btn-primary btn" onclick="window.location.href='{{ path('crear_CategoriaGasto') }}'">Nueva categoría</button>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-3 ">
+
+                </div>
+                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-6 ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 style="padding-left: 42%;">Crear gasto</h3><br>
+                            {{ form(form) }}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-3 ">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

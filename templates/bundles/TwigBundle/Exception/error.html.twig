@@ -1,0 +1,62 @@
+{% extends 'navegador.html.twig' %}
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link href="{{ asset('vendor/fonts/circular-std/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('libs/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/fonts/fontawesome/css/fontawesome-all.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/buttons.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/select.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/fixedHeader.bootstrap4.css') }}">
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="dashboard-wrapper">
+        <div class="dashboard-ecommerce">
+            <div class="container-fluid dashboard-content ">
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4" style="background-color: white;">
+                        <h1>Página no encontrada</h1>
+                        {% if app.user %}
+                            {% set id = app.user.id %}
+                            <p>
+                                <span style="color: red;">UUUUUUPSSS</span>, ha ocurrido un error mientras se intentaba acceder, o crear un recurso, compruebe que dispone de los permisos necesarios y que a su vez
+                                en se está procediendo a la correcta creación del recurso. Si desea puede ir a la página de <a style="color: blue;" href="{{ path('app_login') }}">inicio de sesión</a>, o a su propio <a style="color: blue;" href="{{ path('verUsuario', {id:id}) }}">perfil</a>.
+                            </p>
+                        {% else %}
+                            <p>
+                                UUUUUUPSSS, ha ocurrido un error mientras se intentaba acceder, compruebe que dispone de los permisos necesarios y que a su vez está
+                                intentando acceder al recurso correcto. Si desea puede ir a la página de <a style="color: blue;" href="{{ path('app_login') }}">inicio de sesión </a>.
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% include "footer.html.twig" %}
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js',{callback: 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('js/ajax-call.js') }}"></script>
+
+    <script src="{{ asset('vendor/jquery/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('vendor/slimscroll/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('vendor/multi-select/js/jquery.multi-select.js') }}"></script>
+    <script src="{{ asset('libs/js/main-js.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('vendor/datatables/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/js/data-table.js') }}"></script>
+    <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+{% endblock %}

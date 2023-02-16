@@ -1,0 +1,27 @@
+{% extends 'navegador.html.twig' %}
+
+{% block body_id 'sede_edit' %}
+
+{% block main %}
+    <h1>{{ 'nombre.edit_sede'|trans({'id': sede.id}) }}</h1>
+
+    {{ include('sedes/index.html.twig', {
+        form: form,
+        button_label: 'action.save'|trans,
+        include_back_to_home_link: true,
+    }, with_context = false) }}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="section">
+        <a href="{{ path('verSede', {id: sede.id}) }}" class="btn btn-lg btn-block btn-success">
+            <i class="fa fa-eye" aria-hidden="true"></i> {{ 'action.show_post'|trans }}
+        </a>
+    </div>
+
+
+
+    {{ parent() }}
+
+    {{ show_source_code(_self) }}
+{% endblock %}

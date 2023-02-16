@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - {{ sede.nombre }}
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Nombre: {{ sede.nombre }}</li>
+        <li class="list-group-item">Localización: {{ sede.localizacion }}</li>
+        <li class="list-group-item">Proyectos llevados a cabo en dicha sede: </li>
+    </ul>
+    <br><br>
+    <table class="table table-bordered">
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>ID Proyecto</th>
+            <th>Zona de actuacion</th>
+            <th>Subvención administración publica</th>
+            <th>Subvención entidad privada</th>
+            <th>Subvención fondos propios</th>
+            <th>Convenio con otras entidades</th>
+            <th>Total gasto</th>
+            <th>Personal vinculado</th>
+            <th>Total participantes</th>
+            <th>Total voluntarios</th>
+            <th>Fecha inicio</th>
+            <th>Fecha final</th>
+        </tr>
+        {% for ac in proyectos %}
+
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+
+                <td>{{ ac.id }}</td>
+                <td>{{ ac.zonaActuacion}}</td>
+                <td>{{ ac.subvencionAdministracionPublica}}</td>
+                <td>{{ ac.subvencionEntidadesPrivada}}</td>
+                <td>{{ ac.subvencionFondosPropios}}</td>
+                <td>{{ ac.convenidoOtrasEntidades}}</td>
+                <td>{{ ac.totalGasto}} €</td>
+                <td>{{ ac.personalVinculado}}</td>
+                <td>{{ ac.totalParticipantes}}</td>
+                <td>{{ ac.totalVoluntarios}}</td>
+                <td>{{ ac.fechaInicio | date('d-m-Y')}}</td>
+                <td>{{ ac.fechaFinal | date('d-m-Y')}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

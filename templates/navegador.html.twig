@@ -1,0 +1,171 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div class="dashboard-main-wrapper">
+
+        <div class="dashboard-header">
+            <nav class="navbar navbar-expand-lg bg-white fixed-top">
+                <a class="navbar-brand" href="/dashboard">Organización</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {% if app.user %}
+                    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto navbar-right-top">
+                            <li class="nav-item dropdown nav-user">
+                                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('images/avatar-1.jpg') }}" alt="" class="user-avatar-md rounded-circle"></a>
+                                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                                    <div class="nav-user-info">
+
+                                        <h5 class="mb-0 text-white nav-user-name">{{ app.user.nombre}} {{app.user.apellidos}} </h5>
+
+                                        <span class="status"></span><span class="ml-2">Disponible</span>
+                                    </div>
+                                    <a class="dropdown-item" href="/"><i class="fas fa-cog mr-2"></i>Volver a inicio</a>
+                                    <a class="dropdown-item" href='{{ path('verUsuario',{id:app.user.id}) }}' ><i class="fas fa-user mr-2"></i>Cuenta</a>
+                                    <a class="dropdown-item" href="/logout"><i class="fas fa-power-off mr-2"></i>Cerrar sesión</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </nav>
+        </div>
+
+        {% if app.user %}
+
+            <div class="nav-left-sidebar sidebar-dark">
+                <div class="menu-list">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav flex-column">
+                                <li class="nav-divider">
+                                    Menú
+                                </li>
+                                {% if app.user.getRol() == "Administrador" %}
+                                    <li class="nav-item ">
+                                        <a class="nav-link " href="/dashboard" ><i class="fa fa-fw fa-user-circle"></i>Inicio</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/dashboardSedes" ><i class="fas fa-fw fa-map-marker-alt"></i>Sedes</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fa fa-fw fa-user-circle"></i>Usuarios del sistema</a>
+                                        <div id="submenu-3" class="collapse submenu" style="">
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/dashboardTodosUsuarios">Todos los usuarios</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/dashboardTodosUsuariosAdminSedes">Administradores de sede</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/dashboardTodosUsuariosVoluntarios">Voluntarios</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/dashboardTodosUsuariosParticipantes">Participantes</a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link" href="/dashboardProyectos" ><i class="fa fa-align-center"></i>Proyectos</a>
+
+                                    </li>
+
+                                    <li class="nav-divider">
+                                        Dar de alta
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/registro" ><i class="fa fa-user-plus"></i>Registrar nuevo usuario </a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/registroExcel" ><i class="fa fa-user-plus"></i>Registrar mediante excel</a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/crearSedes" ><i class="fa fa-rocket"></i>Crear nueva sede</a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/crearCategoriaGasto" ><i class="fa fa-rocket"></i>Crear categoría para un gasto</a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/registro-empleado" ><i class="fa fa-rocket"></i>Crear empleado</a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link">Ha iniciado sesión: {{ app.user.nombre }} {{ app.user.apellidos}} y su rol es {{ app.user.rol }} </a>
+                                    </li>
+                                {% elseif  app.user.getRol() == "Administrador de sede"  %}
+                                    <li class="nav-item ">
+                                        <a class="nav-link " href="/dashboard" ><i class="fa fa-fw fa-user-circle"></i>Inicio</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/dashboardSedes" ><i class="fas fa-fw fa-map-marker-alt"></i>Todas las sedes</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link" href="/dashboardMiSede" ><i class="fas fa-fw fa-map-marker-alt"></i>Mi sede</a>
+
+                                    </li>
+
+                                    <li class="nav-item ">
+                                        <a class="nav-link" href="/dashboardProyectos" ><i class="fa fa-align-center"></i>Proyectos</a>
+
+                                    </li>
+
+
+                                    <li class="nav-divider">
+                                        Dar de alta
+                                    </li>
+                                    <li class="nav-item">
+                                        {% if  app.user.sede is not empty  %}
+                                            <a class="nav-link" href="/crearProyecto" ><i class="fa fa-rocket"></i>Crear nuevo proyecto</a>
+
+                                        {% else %}
+                                            <a class="nav-link" >Actualmente no tiene ninguna sede asignada para poder lanzar un nuevo proyecto</a>
+
+                                        {% endif %}
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/crearCategoriaGasto" ><i class="fa fa-rocket"></i>Crear categoría para un gasto</a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/registro" ><i class="fa fa-user-plus"></i>Registrar nuevo usuario </a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/registroExcel" ><i class="fa fa-user-plus"></i>Registrar mediante excel</a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link">Ha iniciado sesión: {{ app.user.nombre }} {{ app.user.apellidos}} y su rol es {{ app.user.rol }} </a>
+                                    </li>
+
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

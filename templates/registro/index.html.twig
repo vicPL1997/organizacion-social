@@ -1,0 +1,60 @@
+{% extends 'navegador.html.twig' %}
+{% form_theme formulario 'bootstrap_3_layout.html.twig' %}
+
+{% block title %}{{ parent() }} - Nuevo Usuario{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Panel de administración </h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/dashboard" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Crear Usuario</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 col-9 ">
+                    <p>Bienvenido a el registro de usuarios, podrá registrar nuevos usuarios en el sistema a través del siguiente formulario. Si desea añadir un número alto de usuarios le recomendamos
+                    añadirlos en un fichero excel y subir todos los usuarios juntos.<br><br>
+                    Por otro lado el sistema generará un correo aleatorio de acceso a el sistema, dicho correo lo podremos cambiar editando el usuario.
+                    El correo generado será <b>nombre_apellidos_comunidad-autonoma@org.es</b> para administradores (sedes y general) y para los voluntarios <b>nombre_apellidos_comunidad-autonoma@voluntario.org.es</b> todo en minúscula y sin acentos.
+                    Estos serán los únicos roles con acceso al sistema.</p>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-3 ">
+
+                </div>
+                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-6 ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 style="padding-left: 42%;">Nuevo usuario</h3><br>
+                            {{ form(formulario) }}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-3 ">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

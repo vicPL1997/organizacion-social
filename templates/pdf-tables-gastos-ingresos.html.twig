@@ -1,0 +1,228 @@
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Informe{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
+
+    <style>
+
+
+        table {
+            border-collapse: collapse;
+        }
+        th {
+            background: #ccc;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background: #efefef;
+        }
+
+        tr:hover {
+            background: #d1d1d1;
+        }
+        .padre{
+            border: 1px;
+            display: inline-block;
+            width: auto;
+            margin: auto;
+            padding: 20px, 20px;
+            text-align: justify;
+        }
+        .cajon1{
+            float:left;
+            max-width: 50%;
+            width:50%;
+            height: 35%;
+        }
+        .cajon2{
+            float:left;
+            max-width: 50%;
+            width:50%;
+            height: 35%;
+        }
+        .c1{
+            float:left;
+            max-width: 48%;
+            width:48%;
+            height: 40%;
+            padding-left: 1%;
+            padding-top: 1%;
+            padding-right: 2% !important;
+        }
+        .c2{
+            float:left;
+            max-width: 48%;
+            width:48%;
+            height: 40%;
+            padding-top: 1%;
+            padding-right: 1% !important;
+        }
+        * {
+            box-sizing: border-box;
+        }
+
+
+        .area {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            padding: 6px;
+
+            margin: 12px;
+            border: 1px solid black;
+
+            width: 563px + 2 * 1px;
+        //width: 800px;
+        }
+
+        .ruler {
+            margin: 12px;
+            height: 8px;
+            border: 1px solid black;
+            background-color: #999;
+            width: 563px + 2 * 1px;
+        }
+
+        .dropdown {
+            border: 1px solid #ddd;
+            padding: 6px;
+            margin-right: 6px;
+            padding-right: 28px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #999;
+        }
+        .chip {
+            flex-direction: column;
+            float:left;
+            flex-grow: 1;
+
+            padding: 8px;
+            margin-bottom: 6px;
+
+            background-color: #e9e9e9;
+            border-radius: 4px;
+
+
+        }
+
+        .check {
+            height: 13px;
+            width: 13px;
+            display: inline-block;
+            margin-right: 3px;
+            background-color: #999;
+        }
+
+        .head {
+            font-size: 16px;
+            padding-bottom: 3% !important;
+
+        }
+
+        .stats {
+            font-size: 13px;
+            Font-family: Dejavu Sans, Arial, Verdana, sans-serif;
+        }
+
+        .meas, .value {
+            padding-top: 2px;
+        }
+        .meas {
+            padding-right: 4px;
+        }
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div>
+    <p>• A continuación se mostrarán los gastos y los ingresos totales del proyecto desglosados.</p>
+</div>
+<div>
+    <h4 style="font-style: italic">• Ingresos</h4>
+    <table class="my_table" style="width: 100%;">
+        <thead>
+        <tr class="trPrincipal">
+            <th>Tipo de ingreso</th>
+            <th>Nombre de la entidad</th>
+            <th>Cantidad aportada</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ac in ingresos %}
+
+            <tr>
+                {% if ac.tipo == "1" %}
+                    {% set tipo = "Administración pública" %}
+                {% elseif ac.tipo == "2" %}
+                    {% set tipo = "Entidad privada" %}
+                {% elseif ac.tipo == "3" %}
+                    {% set tipo = "Fondos propios" %}
+                {% endif %}
+                <td>{{ tipo }}</td>
+                <td>{{ ac.nombreEmisor}} </td>
+                <td>{{ ac.cantidad}} €</td>
+            </tr>
+        {% endfor%}
+        <tfoot>
+        <tr>
+            <th>Ingresos totales</th>
+            <th></th>
+            <th>{{ ingresoTotal }} €</th>
+
+        </tr>
+        </tfoot>
+        </tbody>
+    </table>
+</div>
+<div>
+    <h4 style="font-style: italic">• Gastos</h4>
+    <table class="my_table" style="width: 100%;">
+        <thead>
+        <tr class="trPrincipal">
+            <th>Categoría</th>
+            <th>Descripción</th>
+            <th>Importe</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ac in gastos %}
+
+            <tr>
+                <td>{{ ac.categoria.nombre }}</td>
+                <td>{{ ac.descripcion}} </td>
+                <td>{{ ac.importe}} €</td>
+            </tr>
+        {% endfor%}
+        <tfoot>
+        <tr>
+            <th>Gasto total</th>
+            <th></th>
+            <th>{{ gastoTotal }} €</th>
+
+        </tr>
+        </tfoot>
+        </tbody>
+    </table>
+</div>
+<hr>
+
+</body>
+

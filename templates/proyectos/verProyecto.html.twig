@@ -1,0 +1,650 @@
+{% extends 'navegador.html.twig' %}
+
+
+    {% block title %}
+        {{ parent() }} - Dashboard
+    {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link href="{{ asset('vendor/fonts/circular-std/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('libs/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/fonts/fontawesome/css/fontawesome-all.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/buttons.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/select.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/fixedHeader.bootstrap4.css') }}">
+
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <!-- ============================================================== -->
+    <!-- wrapper  -->
+    <!-- ============================================================== -->
+    <div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Panel de administración </h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/dashboard" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="/dashboardProyectos" class="breadcrumb-link">Todos los proyectos</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">{{ proyecto.nombre }}</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% for message in app.flashes('exitoGasto') %}
+                    <div class="row">
+                        <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('exitoIngreso') %}
+                    <div class="row">
+                        <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('exitoEditIngreso') %}
+                    <div class="row">
+                        <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('exitoCategoriaGasto') %}
+                    <div class="row">
+                        <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('exitoUserEdit') %}
+                    <div class="row">
+                        <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('exitoEditGasto') %}
+                    <div class="row">
+                        <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            <div class="row justify-content-md-center" style="margin-bottom: 5%;">
+
+                <div id="pestanas" class="">
+                    <ul id=lista>
+                        <li id="pestana1"><a href='javascript:cambiarPestanna(pestanas,pestana1);'>Resumen</a></li>
+                        <li id="pestana2"><a href='javascript:cambiarPestanna(pestanas,pestana2);'>Usuarios beneficiarios</a></li>
+                        <li id="pestana3"><a href='javascript:cambiarPestanna(pestanas,pestana3);'>Voluntarios</a></li>
+                        <li id="pestana4"><a href='javascript:cambiarPestanna(pestanas,pestana4);'>Personal</a></li>
+                        <li id="pestana5"><a href='javascript:cambiarPestanna(pestanas,pestana5);'>Gastos</a></li>
+                        <li id="pestana6"><a href='javascript:cambiarPestanna(pestanas,pestana6);'>Estadísticas</a></li>
+
+                    </ul></div>
+                {% if tab == 1 %}
+                    <body onload="javascript:cambiarPestanna(pestanas,pestana1);">
+                {% elseif tab == 2 %}
+                    <body onload="javascript:cambiarPestanna(pestanas,pestana2);">
+                {% elseif tab == 3 %}
+                    <body onload="javascript:cambiarPestanna(pestanas,pestana3);">
+                {% elseif tab == 4 %}
+                    <body onload="javascript:cambiarPestanna(pestanas,pestana4);">
+                {% elseif tab == 5 %}
+                    <body onload="javascript:cambiarPestanna(pestanas,pestana5);">
+                {% endif %}
+                <div id="contenidopestanas">
+                    <main  id="cpestana1">
+                        <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                        <p class="u-text u-text-7" style="padding-left: 7%; font-size: calc(10px + 1vmin) !important;">
+                            <span style="font-weight: 700;">Nombre : </span>
+                            <br>{{ proyecto.nombre }}<br><br>
+
+                            <span style="font-weight: 700;">Participantes: </span>
+                            <br>{{ proyecto.totalParticipantes }} <br><br>
+                            <span style="font-weight: 700;">Gasto total: </span>
+                            <br> {{ proyecto.totalGasto }} €
+
+                        </p>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                        <p class="u-text u-text-7" style="padding-left: 7%; font-size: calc(10px + 1vmin) !important;">
+                        <span style="font-weight: 700;">Sede: </span>
+                            <br>{{ proyecto.sede.localizacion }} <br><br>
+                            <span style="font-weight: 700;">Voluntarios: </span>
+                            <br>{{ proyecto.totalVoluntarios }} <br><br>
+                            <span style="font-weight: 700;">Duración del proyecto: </span>
+                            <br> {{ proyecto.fechaInicio | date('d-m-Y') }} - {{ proyecto.fechaFinal | date('d-m-Y') }} <br><br>
+
+                        </p>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                        <p class="u-text u-text-7" style="padding-left: 7%; font-size: calc(10px + 1vmin) !important;">
+                        <span style="font-weight: 700;">Zona de actuación: </span>
+                            <br>{{ proyecto.zonaActuacion }}<br><br>
+                        <span style="font-weight: 700;">Personal: </span>
+                            <br>{{ proyecto.personalVinculado }} <br><br>
+                            <span style="font-weight: 700;">Actividad: </span>
+                            <br><span {% if proyecto.activo == "Activo" %}style="color: green;"{% else %}style="color: red;"{% endif %}>• {{ proyecto.activo }}</span><br><br>
+                        </p>
+                    </div>
+                    </div>
+                    </main>
+                    <main id="cpestana2" >
+                    <div>
+                        <table id="example" class="table table-striped table-bordered first">
+                                    <thead class="bg-light">
+                                    <tr class="border-0">
+                                        <th class="border-0">Nombre</th>
+                                        <th class="border-0">Apellidos</th>
+                                        <th class="border-0">Edad</th>
+                                        <th class="border-0">Sexo</th>
+                                        <th class="border-0">Nacionalidad</th>
+                                        <th class="border-0">Estado civil</th>
+                                        <th class="border-0">Discapacidad</th>
+                                        <th class="border-0">Acciones</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for ac in usuarios %}
+
+                                        <tr id="{{ ac.id }}">
+                                    <td>{{ ac.nombre }}</td>
+                                    <td>{{ ac.apellidos }}</td>
+                                    <td>{{ ac.edad}}</td>
+                                    <td>{{ ac.sexo }}</td>
+                                    <td>{{ ac.nacionalidad }}</td>
+                                    <td>{{ ac.estado_civil }}</td>
+                                    <td>{{ ac.discapacidad }}</td>
+                                    <td>
+                                    <button title="Ver Usuario"  onclick="window.location.href='{{ path('verUsuario',{id:ac.id}) }}'" class="btn  p-1 rounded fa-lg my-1" style="background-color: green;"><i class="fas fa-eye"></i></button>
+
+                                    {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
+                                        <button onclick="window.location.href='{{ path('editar_usuario',{id:ac.id, tab:2, idProyecto:proyecto.id }) }}'" title="Editar Usuario" class="btn  p-1 rounded fa-lg my-1" style="background-color: #f3b600;"><i class="fas fa-edit"></i></button>
+                                        <button onclick="borrarUsuarioDelProyecto({{ ac.id }},{{ proyecto.id }})" title="Eliminar usuario del proyecto" class="btn  p-1 rounded fa-lg my-1" style="background-color: #da0419;"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                                    {% endif %}</td>
+
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr size="2px" color="black" />
+                           {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
+                                <div class="mt-4">
+                                    <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: green !important;" role="button" onclick="mostrar();">Añadir usuarios beneficiarios</button>
+                                 </div>
+                            {% endif %}
+                            <div id="flotante" style="display:none; ">
+                               {% include "proyectos/addUsers.html.twig" %}
+
+                               <div id="close" style="display: flex;  justify-content: center;"><button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: red !important;" role="button" onclick="window.location.href='{{ path('verProyecto',{id:idProyecto, tab:2}) }}'">cerrar</button></div>
+                            </div>
+                    </main>
+                    <main id="cpestana3" >
+                    <div>
+                        <table  class="table table-striped table-bordered first">
+                            <thead>
+                            <tr>
+                                <th class="border-0">Nombre</th>
+                                <th class="border-0">Apellidos</th>
+                                <th class="border-0">Edad</th>
+                                <th class="border-0">Sexo</th>
+                                <th class="border-0">Nacionalidad</th>
+                                <th class="border-0">Estado civil</th>
+                                <th class="border-0">Discapacidad</th>
+                                <th class="border-0">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ac in voluntarios %}
+                                <tr id="{{ ac.id }}">
+                                    <td>{{ ac.nombre }}</td>
+                                    <td>{{ ac.apellidos }}</td>
+                                    <td>{{ ac.edad}}</td>
+                                    <td>{{ ac.sexo }}</td>
+                                    <td>{{ ac.nacionalidad|trans}}</td>
+                                    <td>{{ ac.estado_civil }}</td>
+                                    <td>{{ ac.discapacidad }}</td>
+                                    <td>
+                                        <button title="Ver Voluntario"  onclick="window.location.href='{{ path('verUsuario',{id:ac.id}) }}'" class="btn  p-1 rounded fa-lg my-1" style="background-color: green;"><i class="fas fa-eye"></i></button>
+                                    {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
+                                        <button title="Editar Usuario"  onclick="window.location.href='{{ path('editar_usuario',{id:ac.id, tab:3, idProyecto:proyecto.id}) }}'"class="btn  p-1 rounded fa-lg my-1" style="background-color: #f3b600;"><i class="fas fa-edit"></i></button>
+                                        <button onclick="borrarUsuarioDelProyecto({{ ac.id }},{{ proyecto.id }})" title="Eliminar voluntario del proyecto" class="btn  p-1 rounded fa-lg my-1" style="background-color: #da0419;"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                                    {% endif %}</td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                        <hr size="2px" color="black" />
+                           {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
+                            <div class="mt-4">
+                                <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: green !important;" role="button" onclick="mostrar2();">Añadir voluntarios</button>
+                            </div>
+                        {% endif %}
+
+                            <div id="flotante2" style="display:none; ">
+                               {% include "proyectos/addVoluntarios.html.twig" %}
+
+                               <div id="close" style="display: flex;  justify-content: center;">
+                                    <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: red !important;" role="button" onclick="window.location.href='{{ path('verProyecto',{id:idProyecto, tab:3}) }}'">cerrar</button>
+                                </div>
+                            </div>
+                    </main>
+                    <main  id="cpestana4" >
+                    <div>
+                        <table  class="table table-striped table-bordered first">
+                            <thead>
+                            <tr>
+                                <th class="border-0">Nombre</th>
+                                <th class="border-0">Apellidos</th>
+                                <th class="border-0">Edad</th>
+                                <th class="border-0">Sexo</th>
+                                <th class="border-0">Dedicación</th>
+                                <th class="border-0">Sueldo</th>
+                                <th class="border-0">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ac in empleados %}
+                                <tr id="{{ ac.id }}">
+                                    <td>{{ ac.nombre }}</td>
+                                    <td>{{ ac.apellidos }}</td>
+                                    <td>{{ ac.edad}}</td>
+                                    <td>{{ ac.sexo }}</td>
+                                    <td>{{ ac.dedicacion_empleado }}</td>
+                                    <td>{{ ac.sueldo_empleado }} €</td>
+                                    <td>
+                                        <button title="Ver Empleado"  onclick="window.location.href='{{ path('verUsuario',{id:ac.id}) }}'" class="btn  p-1 rounded fa-lg my-1" style="background-color: green;"><i class="fas fa-eye"></i></button>
+                                    {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
+                                        <button title="Editar Usuario" onclick="window.location.href='{{ path('editar_usuario',{id:ac.id, tab:4, idProyecto:proyecto.id }) }}'" class="btn  p-1 rounded fa-lg my-1" style="background-color: #f3b600;"><i class="fas fa-edit"></i></button>
+                                        <button onclick="borrarUsuarioDelProyecto({{ ac.id }},{{ proyecto.id }})" title="Eliminar empleado del proyecto" class="btn  p-1 rounded fa-lg my-1" style="background-color: #da0419;"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                                    {% endif %}</td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                        <hr size="2px" color="black" />
+                           {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
+                            <div class="mt-4">
+                                <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: green !important;" role="button" onclick="mostrar3();">Añadir empleados</button>
+
+                            </div>
+                        {% endif %}
+
+                            <div id="flotante3" style="display:none; ">
+                               {% include "proyectos/addEmpleados.html.twig" %}
+
+                               <div id="close" style="display: flex;  justify-content: center;">
+                                    <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: red !important;" role="button" onclick="window.location.href='{{ path('verProyecto',{id:idProyecto, tab:4}) }}'">cerrar</button>
+                               </div>
+                    </main>
+
+                    <main id="cpestana5">
+                    {% if gastos is not empty or gastoTotalEmpleados > 0 %}
+                         <h3 class="mt-2 mb-4 text-center" style="font-family:'Comic Sans MS'; font-style: italic; font-size: 28px; ">Gastos</h3>
+
+                        <table  class="table table-striped table-bordered first">
+                            <thead>
+                            <tr>
+                                <th class="border-0">Categoría</th>
+                                <th class="border-0">Descripción</th>
+                                <th class="border-0">Importe</th>
+                                <th class="border-0">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if gastoTotalEmpleados > 0 %}
+                                <tr>
+                                    <td>Empleados</td>
+                                    <td>Gasto total del sueldo del personal del proyecto</td>
+                                    <td>{{ gastoTotalEmpleados }} €</td>
+                                    <td></td>
+                                </tr>
+                            {% endif %}
+                            {% for ac in gastos %}
+                                <tr id="{{ ac.id }}">
+                                    <td>{{ ac.categoria.nombre }}</td>
+                                    <td>{{ ac.descripcion}} </td>
+                                    <td>{{ ac.importe}} €</td>
+
+                                    <td>
+                                    {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
+                                        <button title="Editar gasto"  onclick="window.location.href='{{ path('editar_gasto',{id:ac.id, idProyecto:proyecto.id}) }}'" class="btn  p-1 rounded fa-lg my-1" style="background-color: #f3b600;"><i class="fas fa-edit"></i></button>
+                                        <button onclick="borrarGastoDelProyecto({{ ac.id }},{{ proyecto.id }})" title="Eliminar gasto del proyecto" class="btn  p-1 rounded fa-lg my-1" style="background-color: #da0419;"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                                    {% endif %}</td>
+
+                                </tr>
+
+                            {% endfor %}
+                                <tfoot>
+                                    <tr>
+                                        <th class="border-0">Gasto total</th>
+                                        <th class="border-0"></th>
+                                        <th class="border-0">{{ gastoTotal }} €</th>
+
+                                    </tr>
+                                </tfoot>
+                            </tbody>
+                        </table>
+                        <div class="pt-2 pb-2" style="display: inline !important; position: relative;">
+                                <button class="button-32" style="margin-top:1%; margin-bottom: 1%;" role="button" onclick="window.location.href='{{ path('crear_gasto',{idProyecto:proyecto.id}) }}'">Crear nuevo gasto</button>
+                                <button class="button-32" style="margin-top:1%; margin-bottom: 1%;" role="button" onclick="window.location.href='{{ path('crear_CategoriaGasto',{idProyecto:proyecto.id}) }}'">Crear categoría para un gasto</button>
+
+                            </div>
+                        {% else %}
+                           <p><b>Actualmente no se encuentra ningún gasto relacionado con el proyecto</b></p>
+                           {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
+                            <div class="mt-4">
+                                <button class="button-32"  role="button" onclick="window.location.href='{{ path('crear_gasto',{idProyecto:proyecto.id}) }}'">Crear nuevo gasto</button>
+                                <button class="button-32"  role="button" onclick="window.location.href='{{ path('crear_CategoriaGasto') }}'">Crear categoría para un gasto</button>                            </div>
+                            {% endif %}
+                        {% endif %}
+                        <hr  class="mt-2"style="border-top: 2px solid rgba(0,0,0);">
+                        {% if ingresos is not empty %}
+                         <h3 class="mt-2 mb-4 text-center" style="font-family:'Comic Sans MS'; font-style: italic; font-size: 28px; ">Ingresos</h3>
+
+                        <table  class="table table-striped table-bordered first">
+                            <thead>
+                            <tr >
+                                <th class="border-0">Tipo de ingreso</th>
+                                <th class="border-0">Nombre de la entidad</th>
+                                <th class="border-0">Cantidad aportada</th>
+                                <th class="border-0">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ac in ingresos %}
+                                <tr>
+                                    {% if ac.tipo == "1" %}
+                                        {% set tipo = "Administración pública" %}
+                                    {% elseif ac.tipo == "2" %}
+                                        {% set tipo = "Entidad privada" %}
+                                    {% elseif ac.tipo == "3" %}
+                                        {% set tipo = "Fondos propios" %}
+                                    {% endif %}
+                                    <td>{{ tipo }}</td>
+                                    <td>{{ ac.nombreEmisor}} </td>
+                                    <td>{{ ac.cantidad}} €</td>
+                                    <td>
+                                    {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
+                                        <button title="Editar ingreso"  onclick="window.location.href='{{ path('editar-ingreso',{id:ac.id, idProyecto:proyecto.id}) }}'" class="btn  p-1 rounded fa-lg my-1" style="background-color: #f3b600;"><i class="fas fa-edit"></i></button>
+                                        <button onclick="borrarIngresoDelProyecto({{ ac.id }},{{ proyecto.id }})" title="Eliminar ingreso del proyecto" class="btn  p-1 rounded fa-lg my-1" style="background-color: #da0419;"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                                    {% endif %}</td>
+
+                                </tr>
+
+                            {% endfor %}
+                                <tfoot>
+                                    <tr>
+                                        <th class="border-0">Ingreso total</th>
+                                        <th class="border-0"></th>
+                                        <th class="border-0">{{ ingresosTotales }} €</th>
+
+                                    </tr>
+                                </tfoot>
+                            </tbody>
+                        </table>
+                        <div class="mt-4">
+                                <button class="button-32" role="button" onclick="window.location.href='{{ path('crear-ingreso',{idProyecto:proyecto.id}) }}'">Crear nuevo ingreso</button>
+                            </div>
+                        {% else %}
+                           <p><b>Actualmente no se encuentra ningún ingreso relacionado con el proyecto</b></p>
+                           {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
+                            <div class="mt-4">
+                                <button class="button-32" role="button" onclick="window.location.href='{{ path('crear-ingreso',{idProyecto:proyecto.id}) }}'">Crear nuevo ingreso</button>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+
+                    </main>
+                    <main id="cpestana6">
+                        <div class="row">
+                        {% if usuarios is not empty %}
+
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Porcentaje(%) de sexos</h3><br>
+                                        <p>{{ render_chart(chart) }}</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Porcentaje(%) de edades por rango</h3><br>
+                                        <p>{{ render_chart(chart3) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Porcentaje(%) del estado civil</h3><br>
+                                        <p>{{ render_chart(chart4) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Porcentaje(%) de países principales</h3><br>
+                                        <p>{{ render_chart(chart5) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Porcentaje(%) de papeles en regla</h3><br>
+                                        <p>{{ render_chart(chart6) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Porcentaje(%) de usuarios con discapacidad</h3><br>
+                                        <p>{{ render_chart(chart7) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                        {% if chart8 is not empty  %}
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Porcentaje(%) de gastos</h3><br>
+                                        <p>{{ render_chart(chart8) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if chart9 is not empty  %}
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 style="text-align: center;">Porcentaje(%) de ingresos</h3><br>
+                                        <p>{{ render_chart(chart9) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        </div>
+                        {% else %}
+                            <p>Actualmente no se encuentra ningún usuario beneficiario inscrito en el proyecto para poder ver las estadísticas.</p>
+                            {% endif %}
+
+
+                    </main>
+        </div>
+        {% if usuarios is not empty %}
+        <button class="btn btn-danger mt-2" target="_blank" onclick="window.location.href='{{ path('exportar-pdf',{idProyecto:proyecto.id}) }}'" ><i class="fas fa-file-pdf"></i> Imprimir informe del proyecto <i class="fas fa-file-pdf"></i></button>
+        {% endif %}
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        Organización Social © 2022 Concept. Panel de administración.
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a href="javascript: void(0);">Sobre Nosotros</a>
+                            <a href="javascript: void(0);">Soporte</a>
+                            <a href="javascript: void(0);">Contacto</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- ============================================================== -->
+            <!-- end footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- end wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+{% endblock %}
+{% block javascripts %}
+{{ encore_entry_script_tags('app') }}
+<script src="{{ asset('vendor/jquery/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js',{callback: 'fos.Router.setData'}) }}"></script>
+<script src="{{ asset('js/ajax-call.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('libs/js/main-js.js') }}"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('vendor/datatables/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/js/data-table.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+
+<script languague="javascript">
+        function mostrar() {
+            div = document.getElementById('flotante');
+            div.style.display = '';
+        }
+
+        function cerrar() {
+            div = document.getElementById('flotante');
+            div.style.display = 'none';
+            window.location.reload();
+        }
+</script>
+<script languague="javascript">
+        function mostrar2() {
+            div = document.getElementById('flotante2');
+            div.style.display = '';
+        }
+
+        function cerrar2() {
+            div = document.getElementById('flotante2');
+            div.style.display = 'none';
+            window.location.reload();
+
+        }
+</script>
+<script languague="javascript">
+        function mostrar3() {
+            div = document.getElementById('flotante3');
+            div.style.display = '';
+        }
+
+        function cerrar3() {
+            div = document.getElementById('flotante3');
+            div.style.display = 'none';
+            window.location.reload();
+        }
+</script>
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        function cambiarPestanna(pestannas,pestanna) {
+            pestanna = document.getElementById(pestanna.id);
+            listaPestannas = document.getElementById(pestannas.id);
+            cpestanna = document.getElementById('c'+pestanna.id);
+            listacPestannas = document.getElementById('contenido'+pestannas.id);
+
+            i=0;
+            while (typeof listacPestannas.getElementsByTagName('main')[i] != 'undefined'){
+                $(document).ready(function(){
+                    $(listacPestannas.getElementsByTagName('main')[i]).css('display','none');
+                    $(listaPestannas.getElementsByTagName('li')[i]).css('background','');
+                    $(listaPestannas.getElementsByTagName('li')[i]).css('padding-bottom','');
+                });
+                i += 1;
+            }
+
+            $(document).ready(function(){
+
+                $(cpestanna).css('display','');
+                $(pestanna).css('background','dimgray');
+                $(pestanna).css('padding-bottom','2px');
+            });
+
+        }
+
+
+
+    </script>
+
+
+{% endblock %}

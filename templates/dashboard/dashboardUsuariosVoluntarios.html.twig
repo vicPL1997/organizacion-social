@@ -1,0 +1,144 @@
+{% extends 'navegador.html.twig' %}
+
+
+    {% block title %}
+    {{ parent() }} - Dashboard
+    {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link href="{{ asset('vendor/fonts/circular-std/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('libs/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/fonts/fontawesome/css/fontawesome-all.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/buttons.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/select.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/css/fixedHeader.bootstrap4.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <!-- ============================================================== -->
+    <!-- wrapper  -->
+    <!-- ============================================================== -->
+    <div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Panel de administración </h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/dashboard" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="/dashboardTodosUsuarios" class="breadcrumb-link">Todos los usuarios</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Voluntarios</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader  -->
+            <!-- ============================================================== -->
+            <div class="ecommerce-widget">
+
+                <div class="row">
+                    <!-- ============================================================== -->
+
+                    <!-- ============================================================== -->
+
+                    <!-- recent orders  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                                <h5 class="card-header">Usuarios voluntarios en los proyectos</h5>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered first">
+                                        <thead class="bg-light">
+                                        <tr>
+                                        <th class="border-0">Nombre</th>
+                                        <th class="border-0">Apellidos</th>
+                                        <th class="border-0">Edad</th>
+                                        <th class="border-0">Sexo</th>
+                                        <th class="border-0">Nacionalidad</th>
+                                        <th class="border-0">Estado civil</th>
+                                        <th class="border-0">Discapacidad</th>
+                                        <th class="border-0">Comunidad autónoma</th>
+                                        <th class="border-0">Acciones</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for ac in usuarios %}
+                                    <tr>
+                                        <td>{{ ac.nombre }}</td>
+                                        <td>{{ ac.apellidos }}</td>
+                                        <td>{{ ac.edad }}</td>
+                                        <td>{{ ac.sexo }}</td>
+                                        <td>{{ ac.nacionalidad }}</td>
+                                        <td>{{ ac.estadoCivil }}</td>
+                                        <td>{{ ac.discapacidad }}</td>
+                                        <td>{{ ac.comunidadAutonoma }}</td>
+                                        <td>{% if is_granted('ROLE_ADMIN') %}
+                                            <button onclick="deleteUsuario({{ ac.id }}), location.reload()" title="Eliminar usuario" class="btn  p-1 rounded fa-lg my-1" style="background-color: #da0419;"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                                            <button title="Editar usuario" onclick="window.location.href='{{ path('editar_usuario',{id:ac.id}) }}'" class="btn  p-1 rounded fa-lg my-1" style="background-color: #f3b600;"><i class="fas fa-edit"></i></button>
+                                            {% endif %}
+                                            <button title="Ver usuario"  onclick="window.location.href='{{ path('verUsuario',{id:ac.id}) }}'"class="btn  p-1 rounded fa-lg my-1" style="background-color: green;"><i class="fas fa-eye"></i></button></td>
+                                    </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        Organización Social © 2022 Concept. Panel de administración.
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a href="javascript: void(0);">Sobre Nosotros</a>
+                            <a href="javascript: void(0);">Soporte</a>
+                            <a href="javascript: void(0);">Contacto</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+        {% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('vendor/jquery/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('vendor/slimscroll/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('vendor/multi-select/js/jquery.multi-select.js') }}"></script>
+    <script src="{{ asset('libs/js/main-js.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('vendor/datatables/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/js/data-table.js') }}"></script>
+    <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
+{% endblock %}

@@ -1,0 +1,302 @@
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Informe{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
+
+    <style>
+
+
+        table {
+            border-collapse: collapse;
+        }
+        th {
+            background: #ccc;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background: #efefef;
+        }
+
+        tr:hover {
+            background: #d1d1d1;
+        }
+        .padre{
+            border: 1px;
+            display: inline-block;
+            width: auto;
+            margin: auto;
+            padding: 20px, 20px;
+            text-align: justify;
+        }
+        .cajon1{
+            float:left;
+            max-width: 50%;
+            width:50%;
+            height: 35%;
+        }
+        .cajon2{
+            float:left;
+            max-width: 50%;
+            width:50%;
+            height: 35%;
+        }
+        .c1{
+            float:left;
+            max-width: 48%;
+            width:48%;
+            height: 40%;
+            padding-left: 1%;
+            padding-top: 1%;
+            padding-right: 2% !important;
+        }
+        .c2{
+            float:left;
+            max-width: 48%;
+            width:48%;
+            height: 40%;
+            padding-top: 1%;
+            padding-right: 1% !important;
+        }
+        * {
+            box-sizing: border-box;
+        }
+
+
+        .area {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            padding: 6px;
+
+            margin: 12px;
+            border: 1px solid black;
+
+            width: 563px + 2 * 1px;
+        //width: 800px;
+        }
+
+        .ruler {
+            margin: 12px;
+            height: 8px;
+            border: 1px solid black;
+            background-color: #999;
+            width: 563px + 2 * 1px;
+        }
+
+        .dropdown {
+            border: 1px solid #ddd;
+            padding: 6px;
+            margin-right: 6px;
+            padding-right: 28px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #999;
+        }
+        .chip {
+            flex-direction: column;
+            float:left;
+            flex-grow: 1;
+
+            padding: 8px;
+            margin-bottom: 6px;
+
+            background-color: #e9e9e9;
+            border-radius: 4px;
+
+
+        }
+
+        .check {
+            height: 13px;
+            width: 13px;
+            display: inline-block;
+            margin-right: 3px;
+            background-color: #999;
+        }
+
+        .head {
+            font-size: 16px;
+            padding-bottom: 3% !important;
+
+        }
+
+        .stats {
+            font-size: 13px;
+            Font-family: Dejavu Sans, Arial, Verdana, sans-serif;
+        }
+
+        .meas, .value {
+            padding-top: 2px;
+        }
+        .meas {
+            padding-right: 4px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div>
+    <h3><i>Estadísticas</i></h3>
+    <p>• A continuación se mostrarán las estadísticas relacionadas con los usuarios beneficiarios del proyecto:</p>
+</div>
+<div style="border: 2px solid #000; height: 100px !important;  display: flex !important; ">
+    <div class="c1">
+        <div class='chip'>
+            <div class='head' >
+                <div class='check checked'></div>
+                Género
+            </div>
+            <table class='stats'>
+                <tr>
+                    <td class='meas'>Masculino</td>
+                    <td class='value'>{{ Phombres }}% - {{ totalHombres }} hombres</td>
+                </tr>
+                <tr>
+                    <td class='meas'>Femenino</td>
+                    <td class='value'>{{ Pmujeres }}% - {{ totalMujeres }} mujeres</td>
+                </tr>
+                <tr>
+                    <td class='meas'>Total de usuarios</td>
+                    <td class='value'>{{ totalUsuarios }} usuarios</td>
+                </tr>
+            </table>
+        </div>
+        <div class='chip'>
+            <div class='head' >
+                <div class='check checked'></div>
+                Papeles en regla
+            </div>
+            <table class='stats'>
+                <tr>
+                    <td class='meas'>Usuarios con documentación legal</td>
+                    <td class='value'>{{ pDocumentacionLegal }}% - {{ totalDocumentacionLegal}} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>Usuarios con documentación no legal</td>
+                    <td class='value'>{{ pNoDocumentacionLegal }}% - {{ totalNoDocumentacionLegal}} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>Total de usuarios</td>
+                    <td class='value'>{{ totalUsuarios }} usuarios</td>
+                </tr>
+            </table>
+        </div>
+        <div class='chip'>
+            <div class='head' >
+                <div class='check checked'></div>
+                Rango de edades
+            </div>
+            <table class='stats'>
+                <tr>
+                    <td class='meas'>0-20 años</td>
+                    <td class='value'>{{ one }}% - {{ tone }} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>21-30 años</td>
+                    <td class='value'>{{ two }}% - {{ ttwo}} usuarios </td>
+                </tr>
+                <tr>
+                    <td class='meas'>31-40 años</td>
+                    <td class='value'>{{ three }}% - {{ tthree }} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>41-50 años</td>
+                    <td class='value'>{{ four }}% - {{ tfour }} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>51-60 años</td>
+                    <td class='value'>{{ five }}% - {{ tfive }} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>61-70 años</td>
+                    <td class='value'>{{ six }}% - {{ tsix }} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>71-80 años</td>
+                    <td class='value'>{{ seven }}% - {{ tseven }} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>Mayores de 80 años</td>
+                    <td class='value'>{{ eight }}% - {{ teight}} usuarios </td>
+                </tr>
+
+                <tr>
+                    <td class='meas'>Total de usuarios</td>
+                    <td class='value'>{{ totalUsuarios }} usuarios</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    <div class="c2">
+
+        <div class='chip'>
+            <div class='head' >
+                <div class='check checked'></div>
+                Estado civil
+            </div>
+            <table class='stats'>
+                <tr>
+                    <td class='meas'>Solteros</td>
+                    <td class='value'>{{ pSolteros }}% - {{ totalSolteros}} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>Casados<br></td>
+                    <td class='value'>{{ pCasados }}% - {{ totalCasados}} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>Total de usuarios</td>
+                    <td class='value'>{{ totalUsuarios }} usuarios</td>
+                </tr>
+            </table>
+        </div>
+        <div class='chip'>
+            <div class='head' >
+                <div class='check checked'></div>
+                Discapacidad
+            </div>
+            <table class='stats'>
+                <tr>
+                    <td class='meas'>Usuarios sin discapacidad</td>
+                    <td class='value'>{{ pNoDiscapacidad }}% - {{ totalNoDiscapacidad }} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>Usuarios con algún tipo de discapacidad</td>
+                    <td class='value'>{{ pDiscapacidad }}% - {{ totalDiscapacidad }} usuarios</td>
+                </tr>
+                <tr>
+                    <td class='meas'>Total de usuarios</td>
+                    <td class='value'>{{ totalUsuarios }} usuarios</td>
+                </tr>
+            </table>
+        </div>
+        <div class='chip'>
+            <div class='head' >
+                <div class='check checked'></div>
+                Países
+            </div>
+            <table class='stats'>
+                {% for key, value in paises %}
+                <tr>
+                    <td class='meas'>{{ key }}</td>
+                    <td class='value'>{{ value }} usuarios</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+</div>
+</body>
+
