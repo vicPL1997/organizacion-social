@@ -82,7 +82,7 @@
                                         <td>
                                             {% if app.user.getRol() == "Administrador"  %}
                                             <button onclick="eliminarSede({{ ac.id }})" title="Eliminar sede" class="btn  p-1 rounded fa-lg my-1" style="background-color: #da0419;"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
-                                            <button  title="Editar sede" class="btn  p-1 rounded fa-lg my-1" style="background-color: #f3b600;"><i class="fas fa-edit"></i></button>
+                                            <button  onclick="window.location.href='{{ path('editar_sede',{id:ac.id}) }}'" title="Editar sede" class="btn  p-1 rounded fa-lg my-1" style="background-color: #f3b600;"><i class="fas fa-edit"></i></button>
                                             {% endif %}
                                             <button title="Ver sede"  onclick="window.location.href='{{ path('verSede',{id:ac.id}) }}'" class="btn  p-1 rounded fa-lg my-1" style="background-color: green;"><i class="fas fa-eye"></i></button> </td>
 

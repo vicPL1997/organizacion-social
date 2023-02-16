@@ -51,6 +51,15 @@
                     </div>
                 </div>
                 {% endfor %}
+                {% for message in app.flashes('exitoEditSede') %}
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
                 <!-- ============================================================== -->
                 <!-- end pageheader  -->
                 <!-- ============================================================== -->
@@ -88,10 +97,10 @@
                                                     <td>{{ ac.nombre }}</td>
                                                     <td>{{ ac.localizacion }}</td>
                                                     <td>
-                                                    {% if is_granted('ROLE_ADMIN') %}
-                                                        <button onclick="deleteSede({{ ac.id }}), location.reload()" title="Eliminar sede" class="btn  p-1 rounded fa-lg my-1" style="background-color: #da0419;"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
-                                                        <button title="Editar sede" class="btn  p-1 rounded fa-lg my-1" style="background-color: #f3b600;"><i class="fas fa-edit"></i></button>
-                                                        {% endif %}
+                                                    {% if app.user.getRol() == "Administrador"  %}
+                                            <button onclick="eliminarSede({{ ac.id }})" title="Eliminar sede" class="btn  p-1 rounded fa-lg my-1" style="background-color: #da0419;"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                                            <button  onclick="window.location.href='{{ path('editar_sede',{id:ac.id}) }}'" title="Editar sede" class="btn  p-1 rounded fa-lg my-1" style="background-color: #f3b600;"><i class="fas fa-edit"></i></button>
+                                            {% endif %}
                                                         <button title="Ver sede"  onclick="window.location.href='{{ path('verSede',{id:ac.id}) }}'"class="btn  p-1 rounded fa-lg my-1" style="background-color: green;"><i class="fas fa-eye"></i></button> </td>
 
                                                 </tr>
@@ -169,6 +178,13 @@
 {% endblock %}
         {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('libs/js/main-js.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js',{callback: 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('js/ajax-call.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('vendor/jquery/jquery-3.3.1.min.js') }}"></script>¡
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>

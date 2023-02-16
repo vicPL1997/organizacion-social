@@ -1,27 +1,58 @@
 {% extends 'navegador.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-{% block body_id 'sede_edit' %}
+{% block title %}{{ parent() }} - Editar sede{% endblock %}
 
-{% block main %}
-    <h1>{{ 'nombre.edit_sede'|trans({'id': sede.id}) }}</h1>
+{% block body %}
+    {{ parent() }}
+    <div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Panel de administración </h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/dashboard" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Editar sede</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-6 ">
+                    <p>En esta ventana podremos editar la sede. Se recomienda <span style="color: red;">no cambiar la localización de la sede</span> ya que al cambiar la localización
+                    se eliminarán los proyectos y los usuarios asociados ya que corresponden a otra localización. Si se desea cambiar la localización tener en cuenta eso.</p>
+                </div>
+            </div>
+            <br><br>
 
-    {{ include('sedes/index.html.twig', {
-        form: form,
-        button_label: 'action.save'|trans,
-        include_back_to_home_link: true,
-    }, with_context = false) }}
-{% endblock %}
+            <div class="row">
+                <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-3 ">
 
-{% block sidebar %}
-    <div class="section">
-        <a href="{{ path('verSede', {id: sede.id}) }}" class="btn btn-lg btn-block btn-success">
-            <i class="fa fa-eye" aria-hidden="true"></i> {{ 'action.show_post'|trans }}
-        </a>
+                </div>
+                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-6 ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 style="padding-left: 42%;">Editar sede</h3><br>
+                            {{ form(form) }}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-3 ">
+
+                </div>
+
+            </div>
+        </div>
     </div>
 
-
-
-    {{ parent() }}
-
-    {{ show_source_code(_self) }}
 {% endblock %}

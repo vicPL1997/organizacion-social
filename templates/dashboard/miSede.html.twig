@@ -180,10 +180,12 @@
 
             {{ parent() }}
             <script src="{{ asset('vendor/jquery/jquery-3.3.1.min.js') }}"></script>
-            <script src="{{ asset('vendor/slimscroll/jquery.slimscroll.js') }}"></script>
+
             <script src="{{ asset('vendor/multi-select/js/jquery.multi-select.js') }}"></script>
             <script src="{{ asset('libs/js/main-js.js') }}"></script>
             <script src="{{ asset('js/ajax-call.js') }}"></script>
+            <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js',{callback: 'fos.Router.setData'}) }}"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>

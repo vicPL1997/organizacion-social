@@ -21,6 +21,7 @@ use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Doctrine;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -243,6 +244,40 @@ class RegistroController extends AbstractController
             'usuario'=> $user,
         ]);
 
+    }
+    /**
+     * @Security("is_granted('ROLE_ADMIN')")
+     * @Route("/eliminar_usuario", options={"expose"=true}, methods={"POST"}, name="eliminar_usuario")
+     */
+    public function eliminarUsuario(Request $request, Doctrine\Persistence\ManagerRegistry $doctrine, UserRepository $usuarios, ProyectosRepository $proyectos, SedesRepository $sedes){
+
+        if ($request->isXmlHttpRequest()){
+            $id=$request->get('id');
+            $em= $doctrine->getManager();
+            $usuario=$usuarios->find(array('id' => $id));
+            if($usuario->getRol()=="Administrador de sede"){
+                $sede=$sedes->find(array('administradorSede' => $id));
+                $sede->setAdministradorSede(null);
+            }else{
+                $proyectosUsuario=$usuario->getProyectos();
+                foreach($proyectosUsuario as $proyecto){
+                    $proyecto->removeUser($usuario);
+                    if($usuario->getRol()=="Usuario"){
+                        $proyecto->setTotalParticipantes($proyecto->getTotalParticipantes()-1);
+                    }elseif($usuario->getRol()=="Empleado"){
+                        $proyecto->setPersonalVinculado($proyecto->getPersonalVinculado()-1);
+                    }elseif($usuario->getRol()=="Voluntario"){
+                        $proyecto->setTotalVoluntarios($proyecto->getTotalVoluntarios()-1);
+                    }
+                }
+            }
+
+            $usuarios->remove($usuario);
+            $em->flush();
+            return new JsonResponse(['nombre']);
+        }else{
+            throw new \Exception('No se ha podido eliminar la sede');
+        }
     }
     #[Route('/usuario/{id}', name: 'verUsuario')]
     public function verUsuario($id, UserRepository $usuarios){

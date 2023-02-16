@@ -53,6 +53,34 @@ function eliminarProyecto(id){
         }
     })
 }
+function eliminarUsuario(id){
+    Swal.fire({
+        title: '¿Estás seguro que deseas eliminar este usuario ? El usuario se eliminará definitivamente del sistema, así como también se eliminará de los proyectos en los que está actualmente',
+        showDenyButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: `Conservar`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            Swal.fire('¡Se ha eliminado el usuario correctamente!', '', 'success')
+            var Ruta = Routing.generate('eliminar_usuario');
+
+            $.ajax({
+                type: 'POST',
+                url: Ruta,
+                data: ({id: id}),
+                async: true,
+                dataType: "json",
+                success: function (data){
+                    window.location.reload();
+                }
+            })
+        } else if (result.isDenied) {
+            Swal.fire('No se ha eliminado el usuario', '', 'error')
+        }
+    })
+}
+
 function borrarUsuarioDelProyecto(idUsuario, idProyecto){
     Swal.fire({
         title: '¿Estás seguro que deseas eliminar el usuario del proyecto ?',

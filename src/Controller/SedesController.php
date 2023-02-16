@@ -50,6 +50,56 @@ class SedesController extends AbstractController
 
         ]);
     }
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
+    #[Route('/editarSede/{id}', name: 'editar_sede')]
+    public function editarSede(Request $request, Doctrine\Persistence\ManagerRegistry $doctrine, ProyectosRepository $proyectos, SedesRepository $sedes, Sedes $sede)
+    {
+        $antiguoAdmin=$sede->getAdministradorSede();
+        $antiguaComunidad=$sede->getLocalizacion();
+        $em= $doctrine->getManager();
+
+        $antiguoAdmin->setTieneSedeAdministrada(0);
+        $em->flush();
+        $form= $this->createForm(SedeType::class, $sede);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em= $doctrine->getManager();
+            $nuevaComunidad=$sede->getLocalizacion();
+            if($antiguaComunidad!=$nuevaComunidad){
+                $proyectosSede=$sede->getProyectos();
+                foreach($proyectosSede as $proyecto){
+                    $users=$proyecto->getUsers();
+                    foreach($users as $user){
+                        $proyecto->removeUser($user);
+                    }
+                    $gastos=$proyecto->getGastos();
+                    foreach($gastos as $gasto){
+                        $proyecto->removeGasto($gasto);
+                    }
+                    $ingresos=$proyecto->getIngresos();
+                    foreach($ingresos as $ingreso){
+                        $proyecto->removeIngreso($ingreso);
+                    }
+                    $proyectos->remove($proyecto);
+                }
+            }
+            $administradorSede=$sede->getAdministradorSede();
+            $administradorSede->setTieneSedeAdministrada(1);
+
+            $em->flush();
+
+            $this->addFlash('exitoEditSede', 'Se ha editado la sede correctamente');
+            return $this->redirectToRoute('dashboard_sedes');
+        }else{
+            $this->addFlash('falloSede', 'No se ha podido editar la sede');
+        }
+        return $this->render('sedes/sedeEdit.html.twig', [
+            'form' => $form->createView()
+
+        ]);
+    }
     #[Route('/sede/{id}', name: 'verSede')]
     public function verSede($id, SedesRepository $sedes){
 

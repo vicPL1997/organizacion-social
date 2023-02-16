@@ -142,9 +142,11 @@ class DashboardController extends AbstractController
 
     }
     /**
+     * @Security("is_granted('ROLE_ADMIN')")
      * @Route("/eliminar_sede", options={"expose"=true}, methods={"POST"}, name="eliminar_sede")
      */
     public function eliminarSede(Request $request, Doctrine\Persistence\ManagerRegistry $doctrine, SedesRepository $sedes, ProyectosRepository $proyectos){
+
         if ($request->isXmlHttpRequest()){
             $id=$request->get('id');
             $em= $doctrine->getManager();
@@ -153,6 +155,7 @@ class DashboardController extends AbstractController
             if(!(is_null($adminSede))){
                 $adminSede->setTieneSedeAdministrada(0);
             }
+            $sede->setAdministradorSede(null);
             $proyectosSede=$sede->getProyectos();
             foreach($proyectosSede as $proyecto){
                 $users=$proyecto->getUsers();
@@ -178,6 +181,7 @@ class DashboardController extends AbstractController
         }
     }
     /**
+     * @Security("is_granted('ROLE_ADMIN_SEDES')")
      * @Route("/eliminar_proyecto", options={"expose"=true}, methods={"POST"}, name="eliminar_proyecto")
      */
     public function eliminarProyecto(Request $request, Doctrine\Persistence\ManagerRegistry $doctrine,  ProyectosRepository $proyectos){
@@ -204,7 +208,7 @@ class DashboardController extends AbstractController
             $em->flush();
             return new JsonResponse(['nombre']);
         }else{
-            throw new \Exception('No se ha podido eliminar la sede');
+            throw new \Exception('No se ha podido eliminar el proyecto');
         }
     }
 }
