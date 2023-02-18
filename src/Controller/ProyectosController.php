@@ -654,18 +654,18 @@ class ProyectosController extends AbstractController
             if(sizeof($p)==0){
                 $valor=1;
                 $porcentaje=self::obtenerPorcentajePaises($usuarios, $user['nacionalidad']);
-                $p[$user['nacionalidad']] = $porcentaje;
+                $p[$user['nacionalidad']] = $porcentaje."% - ".$valor;
             }else {
                 if(array_key_exists($user['nacionalidad'], $p)){
                     $valor=self::contar($user['nacionalidad'], $usuarios);
                     $porcentaje=self::obtenerPorcentajePaises($usuarios, $user['nacionalidad']);
 
-                    $p[$user['nacionalidad']] = $porcentaje;
+                    $p[$user['nacionalidad']] = $porcentaje."% - ".$valor;
 
                 }else{
                     $valor=1;
                     $porcentaje=self::obtenerPorcentajePaises($usuarios, $user['nacionalidad']);
-                    $p[$user['nacionalidad']] = $porcentaje;
+                    $p[$user['nacionalidad']] = $porcentaje."% - ".$valor;
 
                 }
             }

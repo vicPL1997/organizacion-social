@@ -141,8 +141,8 @@
         <!-- ============================================================== -->
     </div>
 {% endblock %}
-        {% block javascripts %}
-    <script src="{{ asset('libs/js/main-js.js') }}"></script>
+{% block javascripts %}
+<script src="{{ asset('libs/js/main-js.js') }}"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
 <script src="{{ path('fos_js_routing_js',{callback: 'fos.Router.setData'}) }}"></script>
 <script src="{{ asset('js/ajax-call.js') }}"></script>
@@ -164,5 +164,4 @@
 <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
-
 {% endblock %}

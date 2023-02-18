@@ -256,8 +256,11 @@ class RegistroController extends AbstractController
             $em= $doctrine->getManager();
             $usuario=$usuarios->find(array('id' => $id));
             if($usuario->getRol()=="Administrador de sede"){
-                $sede=$sedes->find(array('administradorSede' => $id));
-                $sede->setAdministradorSede(null);
+                $sede=$usuario->getSede();
+                if(!is_null($sede)){
+                    $sede->setAdministradorSede(null);
+                }
+
             }else{
                 $proyectosUsuario=$usuario->getProyectos();
                 foreach($proyectosUsuario as $proyecto){
