@@ -1,4 +1,5 @@
 {% extends 'navegador.html.twig' %}
+{% form_theme formulario 'bootstrap_5_layout.html.twig' %}
 
 
     {% block title %}
@@ -89,6 +90,15 @@
                     </div>
                 {% endfor %}
                 {% for message in app.flashes('exitoEditGasto') %}
+                    <div class="row">
+                        <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('exitoUserExcel') %}
                     <div class="row">
                         <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
                             <div class="alert alert-success">
@@ -201,13 +211,35 @@
                             <hr size="2px" color="black" />
                            {% if app.user.getId() == adminSede or app.user.getRol() == 'Administrador' %}
                                 <div class="mt-4">
-                                    <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: green !important;" role="button" onclick="mostrar();">Añadir usuarios beneficiarios</button>
+                                    <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; margin-left: 30%; background-color: green !important;" role="button" onclick="mostrar();">Añadir usuarios<br> beneficiarios    </button>
+                                    <button class="button-32"  style="margin-top:1%; margin-bottom: 1%;  background-color: green !important;" role="button" onclick="mostrarExcel();">Añadir usuarios mediante Excel</button>
                                  </div>
+                                 <br>
+                                 <br>
                             {% endif %}
                             <div id="flotante" style="display:none; ">
                                {% include "proyectos/addUsers.html.twig" %}
 
-                               <div id="close" style="display: flex;  justify-content: center;"><button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: red !important;" role="button" onclick="window.location.href='{{ path('verProyecto',{id:idProyecto, tab:2}) }}'">cerrar</button></div>
+                               <div id="close" style="display: flex;  justify-content: center;"><button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: red !important;" role="button" onclick="window.location.href='{{ path('verProyecto',{id:idProyecto, tab:2}) }}'">Cerrar</button></div>
+                            </div>
+                            <div id="flotanteExcel" style="display:none; ">
+                               <div class="row">
+                                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
+                                     </div>
+                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-6 ">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3 style="padding-left: 30%;">Añadir fichero con usuarios</h3><br>
+                                                {{ form(formulario) }}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
+                                     </div>
+                                </div>
+
+                               <div id="close" style="display: flex;  justify-content: center;"><button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: red !important;" role="button" onclick="window.location.href='{{ path('verProyecto',{id:idProyecto, tab:2}) }}'">Cerrar</button></div>
                             </div>
                     </main>
                     <main id="cpestana3" >
@@ -258,7 +290,7 @@
                                {% include "proyectos/addVoluntarios.html.twig" %}
 
                                <div id="close" style="display: flex;  justify-content: center;">
-                                    <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: red !important;" role="button" onclick="window.location.href='{{ path('verProyecto',{id:idProyecto, tab:3}) }}'">cerrar</button>
+                                    <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: red !important;" role="button" onclick="window.location.href='{{ path('verProyecto',{id:idProyecto, tab:3}) }}'">Cerrar</button>
                                 </div>
                             </div>
                     </main>
@@ -309,7 +341,7 @@
                                {% include "proyectos/addEmpleados.html.twig" %}
 
                                <div id="close" style="display: flex;  justify-content: center;">
-                                    <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: red !important;" role="button" onclick="window.location.href='{{ path('verProyecto',{id:idProyecto, tab:4}) }}'">cerrar</button>
+                                    <button class="button-32"  style="margin-top:1%; margin-bottom: 1%; background-color: red !important;" role="button" onclick="window.location.href='{{ path('verProyecto',{id:idProyecto, tab:4}) }}'">Cerrar</button>
                                </div>
                     </main>
 
@@ -577,7 +609,15 @@
 
 <script languague="javascript">
         function mostrar() {
+            div2 = document.getElementById('flotanteExcel');
+            div2.style.display = 'none';
             div = document.getElementById('flotante');
+            div.style.display = '';
+        }
+        function mostrarExcel() {
+            div2 = document.getElementById('flotante');
+            div2.style.display = 'none';
+            div = document.getElementById('flotanteExcel');
             div.style.display = '';
         }
 
@@ -585,6 +625,10 @@
             div = document.getElementById('flotante');
             div.style.display = 'none';
             window.location.reload();
+        }
+        function cerrarExcel() {
+            div = document.getElementById('flotanteExcel');
+            div.style.display = 'none';
         }
 </script>
 <script languague="javascript">

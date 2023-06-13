@@ -89,9 +89,9 @@ function borrarUsuarioDelProyecto(idUsuario, idProyecto){
         denyButtonText: `Conservar`,
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire('¡Se ha eliminado el usuario del proyecto correctamente!', '', 'success')
+            Swal.fire('¡Se ha eliminado el usuario del proyecto correctamente!',
+                '', 'success')
             var Ruta = Routing.generate('eliminar_usuario_proyecto');
-
             $.ajax({
                 type: 'POST',
                 url: Ruta,
@@ -103,7 +103,8 @@ function borrarUsuarioDelProyecto(idUsuario, idProyecto){
                 }
             })
         } else if (result.isDenied) {
-            Swal.fire('No se ha eliminado el usuario del proyecto', '', 'error')
+            Swal.fire('No se ha eliminado el usuario del proyecto',
+                '', 'error')
         }
     })
 }
@@ -115,9 +116,9 @@ function borrarGastoDelProyecto(idGasto, idProyecto){
         denyButtonText: `Conservar`,
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire('¡Se ha eliminado el gasto del proyecto correctamente!', '', 'success')
+            Swal.fire('¡Se ha eliminado el gasto del proyecto correctamente!',
+                '', 'success')
             var Ruta = Routing.generate('eliminar_gasto_proyecto');
-
             $.ajax({
                 type: 'POST',
                 url: Ruta,
@@ -129,7 +130,8 @@ function borrarGastoDelProyecto(idGasto, idProyecto){
                 }
             })
         } else if (result.isDenied) {
-            Swal.fire('No se ha eliminado el gasto del proyecto', '', 'error')
+            Swal.fire('No se ha eliminado el gasto del proyecto',
+                '', 'error')
         }
     })
 }
@@ -141,9 +143,9 @@ function borrarIngresoDelProyecto(idIngreso, idProyecto){
         denyButtonText: `Conservar`,
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire('¡Se ha eliminado el ingreso del proyecto correctamente!', '', 'success')
+            Swal.fire('¡Se ha eliminado el ingreso del proyecto correctamente!',
+                '', 'success')
             var Ruta = Routing.generate('eliminar_ingreso_proyecto');
-
             $.ajax({
                 type: 'POST',
                 url: Ruta,
@@ -155,18 +157,17 @@ function borrarIngresoDelProyecto(idIngreso, idProyecto){
                 }
             })
         } else if (result.isDenied) {
-            Swal.fire('No se ha eliminado el ingreso del proyecto', '', 'error')
+            Swal.fire('No se ha eliminado el ingreso del proyecto',
+                '', 'error')
         }
     })
 }
 function addUsuarioProyecto(idUsuario, idProyecto){
     var clicked2 = $('#'+idUsuario);
-
     if(clicked2.hasClass('changeActiveButton')){
         var clicked2 = $('#'+idUsuario);
         clicked2.removeClass('changeActiveButton');
         var Ruta = Routing.generate('eliminar_usuario_proyecto');
-
         $.ajax({
             type: 'POST',
             url: Ruta,
@@ -174,13 +175,11 @@ function addUsuarioProyecto(idUsuario, idProyecto){
             async: true,
             dataType: "json",
             success: function (data){
-                //document.getElementById(idUsuario).remove()
             }
         })
     }else{
         clicked2.addClass('changeActiveButton');
         var Ruta = Routing.generate('add_user');
-
         $.ajax({
             type: 'POST',
             url: Ruta,
@@ -191,9 +190,6 @@ function addUsuarioProyecto(idUsuario, idProyecto){
             }
         })
     }
-
-
-
 }
 
 

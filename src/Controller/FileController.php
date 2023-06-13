@@ -39,13 +39,13 @@ class FileController extends AbstractController
         $form = $this->createForm(FileType::class, $excel);
         $form -> handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $imgFile = $form->get('archivo')->getData();
-            if ($imgFile) {
-                $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $file = $form->get('archivo')->getData();
+            if ($file) {
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$imgFile->guessExtension();
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
                 try {
-                    $imgFile->move(
+                    $file->move(
                         $this->getParameter('excel_directory'),
                         $newFilename
                     );
@@ -123,6 +123,8 @@ class FileController extends AbstractController
         return $this->render('registroExcel.html.twig',[
             'formulario' => $form->createView()]);
     }
+
+
     private function generatePassword($length)
     {
         $key = "";

@@ -64,6 +64,7 @@
                                         <tr>
                                         <th class="border-0">Nombre</th>
                                         <th class="border-0">Apellidos</th>
+                                        <th class="border-0">Fecha de alta</th>
                                         <th class="border-0">Edad</th>
                                         <th class="border-0">Sexo</th>
                                         <th class="border-0">Nacionalidad</th>
@@ -78,6 +79,7 @@
                                     <tr>
                                         <td>{{ ac.nombre }}</td>
                                         <td>{{ ac.apellidos }}</td>
+                                        <td>{{ ac.fechaAlta|date("Y/m/d") }}</td>
                                         <td>{{ ac.edad }}</td>
                                         <td>{{ ac.sexo }}</td>
                                         <td>{{ ac.nacionalidad }}</td>

@@ -30,7 +30,6 @@ class IngresosController extends AbstractController
             $proyecto->setIngresosTotales($ingresoNuevo);
             $em->persist($ingreso);
             $em->flush();
-
             $this->addFlash('exitoIngreso', 'Se ha creado el ingreso correctamente');
             return $this->redirectToRoute('verProyecto', ['id'=>$idProyecto,'tab'=>5]);
         }
